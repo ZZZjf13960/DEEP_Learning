@@ -26,6 +26,10 @@ class Trainer:
         self.device = device
         self.evaluator = Evaluator()
 
+        if self.device == 'cuda' or (isinstance(self.device, torch.device) and self.device.type == 'cuda'):
+            print("Enabling cuDNN benchmark for optimized GPU performance.")
+            torch.backends.cudnn.benchmark = True
+
         self.model.to(self.device)
 
     def train_epoch(self):

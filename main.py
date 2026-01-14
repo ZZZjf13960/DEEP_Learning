@@ -29,8 +29,14 @@ def main():
     val_loader = importer.get_dataloader(X_test, y_test, batch_size=32, shuffle=False)
 
     # 3. Initialize Model
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    print(f"Using device: {device}")
+    if torch.cuda.is_available():
+        device = 'cuda'
+        print(f"GPU detected: {torch.cuda.get_device_name(0)}")
+        print(f"Using device: {device}")
+    else:
+        device = 'cpu'
+        print("GPU not detected. Falling back to CPU.")
+        print(f"Using device: {device}")
 
     n_channels = X_train.shape[1]
     n_timepoints = X_train.shape[2]
